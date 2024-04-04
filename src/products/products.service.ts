@@ -39,11 +39,19 @@ export class ProductsService {
 
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return updateProductDto
+  update(id: string, updateProductDto: UpdateProductDto) {
+    const {id:_, name, description, price } = updateProductDto;
+
+    const product = this.findOne( id )
+
+    product.updateWith({ name, description, price})
+
+    return product;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  remove(id: string) {
+    const product = this.findOne(id)
+    this.products = this.products.filter( product => product.id != id);
+    return product
   }
 }
